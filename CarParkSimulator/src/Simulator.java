@@ -1,7 +1,8 @@
 import java.util.Random;
 
-public class Simulator {
-
+public class Simulator {	
+	
+	
     private CarQueue entranceCarQueue;
     private CarQueue paymentCarQueue;
     private CarQueue exitCarQueue;
@@ -25,6 +26,7 @@ public class Simulator {
         paymentCarQueue = new CarQueue();
         exitCarQueue = new CarQueue();
         simulatorView = new SimulatorView(3, 6, 30);
+        
     }
 
     public void run() {
@@ -127,7 +129,6 @@ public class Simulator {
 
 	public void start() {
 		// TODO Auto-generated method stub
-		
 		
 	}
 }

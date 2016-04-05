@@ -1,5 +1,8 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class SimulatorView extends JFrame {
     private CarParkView carParkView;
@@ -13,11 +16,30 @@ public class SimulatorView extends JFrame {
         this.numberOfRows = numberOfRows;
         this.numberOfPlaces = numberOfPlaces;
         cars = new Car[numberOfFloors][numberOfRows][numberOfPlaces];
-        
-        carParkView = new CarParkView();
 
+        carParkView = new CarParkView();
+        
         Container contentPane = getContentPane();
-        //contentPane.add(stepLabel, BorderLayout.NORTH);
+        
+        JButton btnStart = new JButton("Start");
+        btnStart.setToolTipText("Start the process.");
+        btnStart.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent arg0) {
+        		Main.sim.run();
+        		System.out.println("Started.");
+        	}
+        });
+        contentPane.add(btnStart, BorderLayout.NORTH);
+        
+        JButton btnStop = new JButton("Stop");
+        btnStop.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent arg0) {
+        		System.out.println("Stopped.");
+        	}
+        });
+        btnStart.setToolTipText("Stop the process.");
+        contentPane.add(btnStop, BorderLayout.SOUTH);
+        
         contentPane.add(carParkView, BorderLayout.CENTER);
         //contentPane.add(population, BorderLayout.SOUTH);
         pack();
