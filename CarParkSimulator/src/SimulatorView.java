@@ -3,13 +3,17 @@ import java.awt.*;
 import java.awt.BorderLayout;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JTextField;
+import javax.swing.JLabel;
 
 public class SimulatorView extends JFrame {
-    private CarParkView carParkView;
+	private JTextField txtNumberOfSteps; // Textfield for the input of Steps
+	private CarParkView carParkView;
     private int numberOfFloors;
     private int numberOfRows;
     private int numberOfPlaces;
     private Car[][][] cars;
+    
 
     public SimulatorView(int numberOfFloors, int numberOfRows, int numberOfPlaces) {
         this.numberOfFloors = numberOfFloors;
@@ -21,23 +25,48 @@ public class SimulatorView extends JFrame {
         
         Container contentPane = getContentPane();
         
-        JButton btnStart = new JButton("Start");
+        JLabel lblSteps = new JLabel("Steps:"); // Text label
+        lblSteps.setBounds(311, 26, 76, 16);
+        getContentPane().add(lblSteps);
+        
+        txtNumberOfSteps = new JTextField(); // Textfield, standard value 1000
+        txtNumberOfSteps.setBounds(409, 23, 102, 22);
+        txtNumberOfSteps.setText("1000");
+        getContentPane().add(txtNumberOfSteps);
+        txtNumberOfSteps.setColumns(10);
+        
+        JButton btnStart = new JButton("Start"); // Start button
         btnStart.setToolTipText("Start the process.");
-        btnStart.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent arg0) {
-        		Main.sim.run();
+        btnStart.addActionListener(new ActionListener() // Listen for actions
+        { 
+        	public void actionPerformed(ActionEvent arg0)
+        	{
+        		SwingWorker<Void, Void> worker = new SwingWorker<Void,Void>() // Defines a SwingWorker for doInBackground()
+        	{
+        		protected Void doInBackground() throws Exception // Throws the Exception
+        		{
         		System.out.println("Started.");
+        		int numberOfTicks = Integer.parseInt(txtNumberOfSteps.getText().trim()); // Takes the int, parses it and trims it for letters or illegal chars.
+        		Main.sim.run(numberOfTicks); // Runs the Simulation with the number of Ticks as parameter
+        		return null; // Required for some reason
+        		}
+        	};
+        		worker.execute(); // Executes the Worker
         	}
         });
+       
         contentPane.add(btnStart, BorderLayout.NORTH);
         
-        JButton btnStop = new JButton("Stop");
+        JButton btnStop = new JButton("Stop"); // Stop button
         btnStop.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent arg0) {
+        	public void actionPerformed(ActionEvent arg1) 
+        		{
         		System.out.println("Stopped.");
-        	}
+        		Main.sim.run(0);
+        		}
         });
-        btnStart.setToolTipText("Stop the process.");
+        
+        btnStop.setToolTipText("Stop the process.");
         contentPane.add(btnStop, BorderLayout.SOUTH);
         
         contentPane.add(carParkView, BorderLayout.CENTER);
@@ -220,5 +249,5 @@ public class SimulatorView extends JFrame {
                     10 - 1); // TODO use dynamic size or constants
         }
     }
-
-}
+        }
+    

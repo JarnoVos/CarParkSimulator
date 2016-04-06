@@ -7,7 +7,7 @@ public class Simulator {
     private CarQueue paymentCarQueue;
     private CarQueue exitCarQueue;
     private SimulatorView simulatorView;
-
+    
     private int day = 0;
     private int hour = 0;
     private int minute = 0;
@@ -21,23 +21,27 @@ public class Simulator {
     int paymentSpeed = 10; // number of cars that can pay per minute
     int exitSpeed = 9; // number of cars that can leave per minute
 
+    
     public Simulator() {
         entranceCarQueue = new CarQueue();
         paymentCarQueue = new CarQueue();
         exitCarQueue = new CarQueue();
         simulatorView = new SimulatorView(3, 6, 30);
-        
+        simulatorView.getContentPane().setLayout(null);
+     
     }
 
-    public void run() {
-        for (int i = 0; i < 10000; i++) {
-            tick();
-        }
-    }
+    public void run(int numberOfTicks) {
+        for (int i = 0; i < numberOfTicks; i++) {
+        	tick();
+            }
+
+    	};
+    
 
     private void tick() {
         // Advance the time by one minute.
-        minute++;
+    	minute++;
         while (minute > 59) {
             minute -= 60;
             hour++;
