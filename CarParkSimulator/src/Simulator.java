@@ -21,6 +21,13 @@ public class Simulator {
     int paymentSpeed = 10; // number of cars that can pay per minute
     int exitSpeed = 9; // number of cars that can leave per minute
 
+    private static int randInt(int min, int max) {
+    	
+            Random randCarType = new Random();
+            int randNr = randCarType.nextInt((3 - 1) + 1) + min;
+            		return randNr;}  
+    
+    public int carTypeInt = randInt(1,3);
     
     public Simulator() {
         entranceCarQueue = new CarQueue();
@@ -66,11 +73,30 @@ public class Simulator {
         double numberOfCarsPerHour = averageNumberOfCarsPerHour + random.nextGaussian() * standardDeviation;
         int numberOfCarsPerMinute = (int)Math.round(numberOfCarsPerHour / 60);
 
-        // Add the cars to the back of the queue.
+        // Add a random car (with type) to the back of the queue. (Work-in-progress)
         for (int i = 0; i < numberOfCarsPerMinute; i++) {
-            Car car = new AdHocCar();
-            entranceCarQueue.addCar(car);
-        }
+        	
+        	if (carTypeInt == 1) {
+        		Car car = new AdHocCar();
+        		entranceCarQueue.addCar(car);
+        		System.out.println("Ad-Hoc Car");
+        		
+        	} else {
+        		if (carTypeInt == 2) {
+        			Car car = new LongTerm();
+        			entranceCarQueue.addCar(car);
+        			System.out.println("Long-term");
+        			
+        		} else {
+        			if (carTypeInt == 3) {
+        				Car car = new ShortTerm();
+        				entranceCarQueue.addCar(car);
+        				System.out.println("Short-term");
+        				
+        			}
+        		}
+        		}
+        	}
 
         // Remove car from the front of the queue and assign to a parking space.
         for (int i = 0; i < enterSpeed; i++) {
@@ -88,6 +114,7 @@ public class Simulator {
         }
 
         // Perform car park tick.
+
         simulatorView.tick();
 
         // Add leaving cars to the exit queue.

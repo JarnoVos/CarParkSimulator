@@ -59,10 +59,10 @@ public class SimulatorView extends JFrame {
         
         JButton btnStop = new JButton("Stop"); // Stop button
         btnStop.addActionListener(new ActionListener() {
+        	@Override
         	public void actionPerformed(ActionEvent arg1) 
         		{
         		System.out.println("Stopped.");
-        		Main.sim.run(0);
         		}
         });
         
