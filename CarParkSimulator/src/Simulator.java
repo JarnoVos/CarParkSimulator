@@ -41,6 +41,9 @@ public class Simulator {
     public void run(int numberOfTicks) {
         for (int i = 0; i < numberOfTicks; i++) {
         	tick();
+        	if(SimulatorView.stopt == true){
+        		i = numberOfTicks;
+        	}
             }
 
     	};
@@ -123,6 +126,7 @@ public class Simulator {
             if (car == null) {
                 break;
             }
+            
             car.setIsPaying(true);
             paymentCarQueue.addCar(car);
         }

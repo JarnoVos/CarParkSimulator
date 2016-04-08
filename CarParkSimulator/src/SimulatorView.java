@@ -13,6 +13,7 @@ public class SimulatorView extends JFrame {
     private int numberOfRows;
     private int numberOfPlaces;
     private Car[][][] cars;
+    public static boolean stopt = false;
     
 
     public SimulatorView(int numberOfFloors, int numberOfRows, int numberOfPlaces) {
@@ -31,10 +32,23 @@ public class SimulatorView extends JFrame {
         
         txtNumberOfSteps = new JTextField(); // Textfield, standard value 1000
         txtNumberOfSteps.setBounds(409, 23, 102, 22);
-        txtNumberOfSteps.setText("1000");
+        txtNumberOfSteps.setText("Input number of iterations");
         getContentPane().add(txtNumberOfSteps);
         txtNumberOfSteps.setColumns(10);
         
+        JButton btnStop = new JButton("Stop"); // Stop button
+        btnStop.addActionListener(new ActionListener() {
+        	@Override
+        	public void actionPerformed(ActionEvent arg1) 
+        		{
+        		stopt = true;
+        		System.out.println("Stopped.");
+        		}
+        });
+        
+        btnStop.setToolTipText("Stop the process.");
+        contentPane.add(btnStop, BorderLayout.SOUTH);
+       
         JButton btnStart = new JButton("Start"); // Start button
         btnStart.setToolTipText("Start the process.");
         btnStart.addActionListener(new ActionListener() // Listen for actions
@@ -57,17 +71,7 @@ public class SimulatorView extends JFrame {
        
         contentPane.add(btnStart, BorderLayout.NORTH);
         
-        JButton btnStop = new JButton("Stop"); // Stop button
-        btnStop.addActionListener(new ActionListener() {
-        	@Override
-        	public void actionPerformed(ActionEvent arg1) 
-        		{
-        		System.out.println("Stopped.");
-        		}
-        });
-        
-        btnStop.setToolTipText("Stop the process.");
-        contentPane.add(btnStop, BorderLayout.SOUTH);
+
         
         contentPane.add(carParkView, BorderLayout.CENTER);
         //contentPane.add(population, BorderLayout.SOUTH);
@@ -78,6 +82,7 @@ public class SimulatorView extends JFrame {
     }
 
     public void updateView() {
+    	System.out.println("hoi");
         carParkView.updateView();
     }
     
